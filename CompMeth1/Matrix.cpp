@@ -86,7 +86,7 @@ double Matrix::f1_analytical(double x, double t)
 	return result;
 }
 
-void Matrix::upwind_scheme(func_ptr func)
+double* Matrix::upwind_scheme(func_ptr func)
 {
 	//in working version try to change constant values in 'for' loops
 	double tmpArr[100];
@@ -119,12 +119,18 @@ void Matrix::upwind_scheme(func_ptr func)
 		memcpy(tmpArr, nxtArr, sizeof(nxtArr));
 
 	}
+	return nxtArr;
+
+}
+
+void Matrix::saveToFile(double* arr)
+{
 	//save results to file
 	std::ofstream file;
 	file.open("results_f1_numerical.txt");
 	for (int i = 0; i < 100; i++)
 	{
-		file << nxtArr[i] << std::endl;
+		file << arr[i] << std::endl;
 	}
 	file.close();
 }

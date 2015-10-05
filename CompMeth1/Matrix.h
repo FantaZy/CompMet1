@@ -22,11 +22,11 @@ public:
 	Matrix();
 	~Matrix();
 	
-	
+	void saveToFile(double* arr);
 	double f0_num(double x, double nothing = 0);
 	double f1_num(double x, double nothing = 0);
 
-	void upwind_scheme(func_ptr func);
+	double* upwind_scheme(func_ptr func);
 	double f0_analytical(double x, double t);
 	double f1_analytical(double x, double t);
 
