@@ -6,7 +6,7 @@
 class Matrix
 {
 private:
-	typedef double(Matrix::*func_ptr)(double);
+	typedef double(Matrix::*func_ptr)(double, double);
 	func_ptr function_pointer;
 	double points_numb = 100.0;
 	double u = 1;
@@ -20,11 +20,11 @@ public:
 	~Matrix();
 	void calc_dx();
 	double sign(double x);
-	double f0_num(double x);
-	double f1_num(double x);
+	double f0_num(double x, double nothing = 0);
+	double f1_num(double x, double nothing = 0);
 
-	void upwind_scheme_F0();
-	void upwind_scheme_F1(func_ptr func);
+
+	void upwind_scheme(func_ptr func);
 	double f0_analytical(double x, double t);
 	double f1_analytical(double x, double t);
 	void upwind_scheme_f0_analytic();
