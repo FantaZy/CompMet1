@@ -13,21 +13,22 @@ private:
 	double matrix;
 	double dt;
 	double dx = 80.0 / (100.-1.);
+	double sign(double x);
+	void calc_dx();
+	
+	
 	
 public:
-	Matrix(int row, int col);
 	Matrix();
 	~Matrix();
-	void calc_dx();
-	double sign(double x);
+	
+	
 	double f0_num(double x, double nothing = 0);
 	double f1_num(double x, double nothing = 0);
-
 
 	void upwind_scheme(func_ptr func);
 	double f0_analytical(double x, double t);
 	double f1_analytical(double x, double t);
-	void upwind_scheme_f0_analytic();
-	void upwind_scheme_f1_analytic();
+
 	
 };

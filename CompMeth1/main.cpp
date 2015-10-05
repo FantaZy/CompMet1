@@ -11,12 +11,13 @@ double tmpfunc(double x)
 
 int main()
 {
-	Matrix mat;
-	//mat.upwind_scheme_F0();
-	//mat.upwind_scheme_f0_analytic();
-	
+	Matrix mat;	
 	mat.upwind_scheme(&Matrix::f0_analytical);
-	//mat.upwind_scheme_f1_analytic();
+	mat.upwind_scheme(&Matrix::f0_num);
+	mat.upwind_scheme(&Matrix::f1_analytical);
+	mat.upwind_scheme(&Matrix::f1_num);
+	
+	
 	system("PAUSE");
 	return 0;
 }
