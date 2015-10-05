@@ -3,6 +3,7 @@
 #include <array>
 #include <functional>
 
+
 class Matrix
 {
 private:
@@ -10,7 +11,7 @@ private:
 	func_ptr function_pointer;
 	double points_numb = 100.0;
 	double u = 1;
-	double matrix;
+	double matrix[100];
 	double dt;
 	double dx = 80.0 / (100.-1.);
 	double sign(double x);
@@ -22,7 +23,7 @@ public:
 	Matrix();
 	~Matrix();
 	
-	void saveToFile(double* arr);
+	void saveToFile(double* arr, std::string filename);
 	double f0_num(double x, double nothing = 0);
 	double f1_num(double x, double nothing = 0);
 

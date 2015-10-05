@@ -90,7 +90,7 @@ double* Matrix::upwind_scheme(func_ptr func)
 {
 	//in working version try to change constant values in 'for' loops
 	double tmpArr[100];
-	double nxtArr[100];
+	//double nxtArr[100];
 	double x = -40.0;	
 	this->function_pointer = func;
 
@@ -103,7 +103,7 @@ double* Matrix::upwind_scheme(func_ptr func)
 	}
 	std::cout << (dt / dx) << std::endl;
 
-	memcpy(nxtArr, tmpArr, sizeof(nxtArr));
+	memcpy(this->matrix, tmpArr, sizeof(this->matrix));
 	for (double time = 1; time <= 5; time += dt)
 	{
 		std::cout << "nxtArr is calculating \n" << std::endl;
@@ -112,22 +112,22 @@ double* Matrix::upwind_scheme(func_ptr func)
 		for (int i = 1; i < 100; i++)
 		{
 			x = (-40.0) + i * dx;
-			nxtArr[i] = tmpArr[i] - (dt / dx)*(tmpArr[i] - tmpArr[i - 1]);
-			std::cout << nxtArr[i] << " ";
+			this->matrix[i] = tmpArr[i] - (dt / dx)*(tmpArr[i] - tmpArr[i - 1]);
+			std::cout << this->matrix[i] << " ";
 		}
 		x = -40.0;
-		memcpy(tmpArr, nxtArr, sizeof(nxtArr));
+		memcpy(tmpArr, this->matrix, sizeof(this->matrix));
 
 	}
-	return nxtArr;
+	return this->matrix;
 
 }
 
-void Matrix::saveToFile(double* arr)
+void Matrix::saveToFile(double* arr, std::string filename)
 {
 	//save results to file
 	std::ofstream file;
-	file.open("results_f1_numerical.txt");
+	file.open(filename);
 	for (int i = 0; i < 100; i++)
 	{
 		file << arr[i] << std::endl;
