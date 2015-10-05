@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <functional>
 #define TIME 5.0
 
 Matrix::Matrix(int row, int col)
@@ -171,18 +172,19 @@ double Matrix::f1_num(double x)
 	else
 		return 0.;
 }
-void Matrix::upwind_scheme_F1()
+void Matrix::upwind_scheme_F1(func_ptr func)
 {
 	//in working version try to change constant values in 'for' loops
 	double tmpArr[100];
 	double nxtArr[100];
-	double x = -40.0;
-	std::cout.precision(5);
+	double x = -40.0;	
+	this->function_pointer = func;
 
 	std::cout << "tmpArr is calculating \n" << std::endl;
 	for (int i = 0; i < 100; i++)
 	{
-		tmpArr[i] = f1_num(x);
+		//tmpArr[i] = f1_num(x);
+		tmpArr[i] = (this->*function_pointer)(x);
 		x = (-40.0) + i * dx;
 	}
 	std::cout << (dt / dx) << std::endl;
