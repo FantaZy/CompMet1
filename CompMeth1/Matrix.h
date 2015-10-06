@@ -16,6 +16,7 @@ private:
 	double x_max;
 	std::vector<double> matrix;
 	double dt;
+	double time;
 	double dx = 80.0 / (100.-1.);
 	double sign(double x);
 	void calc_dx();
@@ -24,11 +25,12 @@ private:
 	
 public:
 	Matrix();
-	Matrix(double points_numb, double x_min, double x_max);
+	Matrix(double points_numb, double x_min, double x_max, double time);
 	~Matrix();
 
 	void setVectorSize(double size);
 	void setDt();
+	void setTime(double time);
 	void setPointsNumber(double points_numb);
 	void saveToFile(std::vector<double> arr, std::string filename);
 	void setRange(double min, double max);

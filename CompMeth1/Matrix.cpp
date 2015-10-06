@@ -11,9 +11,10 @@ Matrix::Matrix()
 {
 	this->setDt();
 }
-Matrix::Matrix(double points_numb, double x_min, double x_max)
+Matrix::Matrix(double points_numb, double x_min, double x_max, double time)
 {
 	this->setDt();
+	this->setTime(time);
 	this->setPointsNumber(points_numb);
 	this->setVectorSize(this->points_numb);
 	this->setRange(x_min, x_max);
@@ -35,6 +36,10 @@ void Matrix::setDt()
 	{
 		std::cout << "dt: " << dt << " is lower than dx/u - solution may be not stable." << std::endl;
 	}
+}
+void Matrix::setTime(double time)
+{
+	this->time = time;
 }
 
 void Matrix::setPointsNumber(double points_numb)
@@ -115,25 +120,19 @@ double Matrix::f1_analytical(double x, double t)
 
 std::vector<double>  Matrix::upwind_scheme(func_ptr func)
 {
-	//in working version try to change constant values in 'for' loops
-	//double tmpArr[100];
 	std::vector<double> tmpArr(this->points_numb);
-	//double nxtArr[100];
 	double x = this->x_min;	
 	this->function_pointer = func;
 
 	std::cout << "tmpArr is calculating \n" << std::endl;
 	for (int i = 0; i < this->points_numb; i++)
 	{
-		//tmpArr[i] = f1_num(x);
 		tmpArr[i] = (this->*function_pointer)(x,0);
 		x = (this->x_min) + i * dx;
 	}
 	std::cout << (dt / dx) << std::endl;
-
-	//memcpy(this->matrix, tmpArr, sizeof(this->matrix));
 	this->matrix = tmpArr;
-	for (double time = 1; time <= 5; time += dt)
+	for (double time = 1; time <= this->time; time += dt)
 	{
 		std::cout << "nxtArr is calculating \n" << std::endl;
 		x = this->x_min + dx;
@@ -145,9 +144,7 @@ std::vector<double>  Matrix::upwind_scheme(func_ptr func)
 			std::cout << this->matrix[i] << " ";
 		}
 		x = this->x_min;
-		//memcpy(tmpArr, this->matrix, sizeof(this->matrix));
 		tmpArr = this->matrix;
-
 	}
 	return this->matrix;
 
@@ -167,26 +164,21 @@ void Matrix::saveToFile(std::vector<double> arr, std::string filename)
 
 std::vector<double> Matrix::central_scheme(func_ptr func)
 {
-	//in working version try to change constant values in 'for' loops
-	//double tmpArr[100];
-	//double* array = new double[this->points_numb];
-	std::vector<double> tmpArr(this->points_numb);
-	//double nxtArr[100];
+	std::vector<double> tmpArr(this->points_numb);	
 	double x = this->x_min;
 	this->function_pointer = func;
 
 	std::cout << "tmpArr is calculating \n" << std::endl;
 	for (int i = 0; i < this->points_numb; i++)
 	{
-		//tmpArr[i] = f1_num(x);
 		tmpArr[i] = (this->*function_pointer)(x, 0);
 		x = (this->x_min) + i * dx;
 	}
 	std::cout << (dt / dx) << std::endl;
 
-	//memcpy(this->matrix, tmpArr, sizeof(this->matrix));
+	
 	this->matrix = tmpArr;
-	for (double time = 1; time <= 5; time += dt)
+	for (double time = 1; time <= this->time; time += dt)
 	{
 		std::cout << "nxtArr is calculating \n" << std::endl;
 		x = this->x_min + dx;
@@ -197,8 +189,7 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 			this->matrix[i] = tmpArr[i] - (dt / 2*dx)*(tmpArr[i+1] - tmpArr[i - 1]);
 			std::cout << this->matrix[i] << " ";
 		}
-		x = this->x_min;
-		//memcpy(tmpArr, this->matrix, sizeof(this->matrix));
+		x = this->x_min;		
 		tmpArr = this->matrix;
 
 	}
