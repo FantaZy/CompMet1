@@ -119,7 +119,7 @@ std::vector<double>  Matrix::upwind_scheme(func_ptr func)
 	//double tmpArr[100];
 	std::vector<double> tmpArr(this->points_numb);
 	//double nxtArr[100];
-	double x = -40.0;	
+	double x = this->x_min;	
 	this->function_pointer = func;
 
 	std::cout << "tmpArr is calculating \n" << std::endl;
@@ -127,7 +127,7 @@ std::vector<double>  Matrix::upwind_scheme(func_ptr func)
 	{
 		//tmpArr[i] = f1_num(x);
 		tmpArr[i] = (this->*function_pointer)(x,0);
-		x = (-40.0) + i * dx;
+		x = (this->x_min) + i * dx;
 	}
 	std::cout << (dt / dx) << std::endl;
 
@@ -136,15 +136,15 @@ std::vector<double>  Matrix::upwind_scheme(func_ptr func)
 	for (double time = 1; time <= 5; time += dt)
 	{
 		std::cout << "nxtArr is calculating \n" << std::endl;
-		x = -40.0 + dx;
+		x = this->x_min + dx;
 
 		for (int i = 1; i < this->points_numb; i++)
 		{
-			x = (-40.0) + i * dx;
+			x = (this->x_min) + i * dx;
 			this->matrix[i] = tmpArr[i] - (dt / dx)*(tmpArr[i] - tmpArr[i - 1]);
 			std::cout << this->matrix[i] << " ";
 		}
-		x = -40.0;
+		x = this->x_min;
 		//memcpy(tmpArr, this->matrix, sizeof(this->matrix));
 		tmpArr = this->matrix;
 
@@ -172,7 +172,7 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 	//double* array = new double[this->points_numb];
 	std::vector<double> tmpArr(this->points_numb);
 	//double nxtArr[100];
-	double x = -40.0;
+	double x = this->x_min;
 	this->function_pointer = func;
 
 	std::cout << "tmpArr is calculating \n" << std::endl;
@@ -180,7 +180,7 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 	{
 		//tmpArr[i] = f1_num(x);
 		tmpArr[i] = (this->*function_pointer)(x, 0);
-		x = (-40.0) + i * dx;
+		x = (this->x_min) + i * dx;
 	}
 	std::cout << (dt / dx) << std::endl;
 
@@ -189,15 +189,15 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 	for (double time = 1; time <= 5; time += dt)
 	{
 		std::cout << "nxtArr is calculating \n" << std::endl;
-		x = -40.0 + dx;
+		x = this->x_min + dx;
 
 		for (int i = 1; i < this->points_numb; i++)
 		{
-			x = (-40.0) + i * dx;
+			x = (this->x_min) + i * dx;
 			this->matrix[i] = tmpArr[i] - (dt / 2*dx)*(tmpArr[i+1] - tmpArr[i - 1]);
 			std::cout << this->matrix[i] << " ";
 		}
-		x = -40.0;
+		x = this->x_min;
 		//memcpy(tmpArr, this->matrix, sizeof(this->matrix));
 		tmpArr = this->matrix;
 
