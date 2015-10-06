@@ -135,4 +135,8 @@ void Matrix::saveToFile(double* arr, std::string filename)
 	file.close();
 }
 
+double* Matrix::central_scheme(func_ptr func)
+{
+	return NULL;
+}
 

@@ -25,11 +25,11 @@ public:
 	
 	void saveToFile(double* arr, std::string filename);
 	double f0_num(double x, double nothing = 0);
-	double f1_num(double x, double nothing = 0);
-
-	double* upwind_scheme(func_ptr func);
+	double f1_num(double x, double nothing = 0);	
 	double f0_analytical(double x, double t);
 	double f1_analytical(double x, double t);
+	double* upwind_scheme(func_ptr func);
+	double* central_scheme(func_ptr func);
 
 	
 };
