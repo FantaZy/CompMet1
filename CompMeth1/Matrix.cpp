@@ -230,3 +230,4 @@ std::vector<double> Matrix::lax_friedrichs(func_ptr func)
 	}
 	return this->matrix;
 }
+
