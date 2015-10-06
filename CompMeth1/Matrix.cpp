@@ -108,7 +108,7 @@ double Matrix::f1_num(double x, double nothing)
 double Matrix::f0_analytical(double x, double t)
 {
 	double result = 0;
-	result = (1. / 2.)*sign(x - t) + 1.;
+	result = (1. / 2.)*(sign(x - t) + 1.);
 	return result;
 }
 double Matrix::f1_analytical(double x, double t)
@@ -172,7 +172,7 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 	for (int i = 0; i < this->points_numb; i++)
 	{
 		tmpArr[i] = (this->*function_pointer)(x, 0);
-		x = (this->x_min) + i * dx;
+		x = (this->x_min) + i * dx; //avoid increasing error by addind dx in each iteration
 	}
 	std::cout << (dt / dx) << std::endl;
 
@@ -183,10 +183,10 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 		std::cout << "nxtArr is calculating \n" << std::endl;
 		x = this->x_min + dx;
 
-		for (int i = 1; i < this->points_numb; i++)
+		for (int i = 1; i < this->points_numb-1; i++)
 		{
 			x = (this->x_min) + i * dx;
-			this->matrix[i] = tmpArr[i] - (dt / 2*dx)*(tmpArr[i+1] - tmpArr[i - 1]);
+			this->matrix[i] = tmpArr[i] - (dt / (2*dx))*(tmpArr[i+1] - tmpArr[i - 1]);
 			std::cout << this->matrix[i] << " ";
 		}
 		x = this->x_min;		
