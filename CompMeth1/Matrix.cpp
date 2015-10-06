@@ -196,3 +196,37 @@ std::vector<double> Matrix::central_scheme(func_ptr func)
 	return this->matrix;
 }
 
+std::vector<double> Matrix::lax_friedrichs(func_ptr func)
+{
+	std::vector<double> tmpArr(this->points_numb);
+	double x = this->x_min;
+	this->function_pointer = func;
+
+	std::cout << "tmpArr is calculating \n" << std::endl;
+	for (int i = 0; i < this->points_numb; i++)
+	{
+		tmpArr[i] = (this->*function_pointer)(x, 0);
+		x = (this->x_min) + i * dx; //avoid increasing error by addind dx in each iteration
+	}
+	std::cout << (dt / dx) << std::endl;
+
+
+	this->matrix = tmpArr;
+	for (double time = 1; time <= this->time; time += dt)
+	{
+		std::cout << "nxtArr is calculating \n" << std::endl;
+		x = this->x_min + dx;
+
+		for (int i = 1; i < this->points_numb - 1; i++)
+		{
+			x = (this->x_min) + i * dx;
+			this->matrix[i] = ((tmpArr[i + 1] + tmpArr[i - 1]) / 2.) - (dt / (2 * dx))*(tmpArr[i + 1] - tmpArr[i - 1]);
+
+			std::cout << this->matrix[i] << " ";
+		}
+		x = this->x_min;
+		tmpArr = this->matrix;
+
+	}
+	return this->matrix;
+}

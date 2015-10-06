@@ -40,6 +40,7 @@ public:
 	double f1_analytical(double x, double t);
 	std::vector<double>  upwind_scheme(func_ptr func);
 	std::vector<double> central_scheme(func_ptr func);
+	std::vector<double> lax_friedrichs(func_ptr func);
 
 	
 };

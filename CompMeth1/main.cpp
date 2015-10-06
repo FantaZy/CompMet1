@@ -11,12 +11,13 @@ double tmpfunc(double x)
 
 int main()
 {
-	Matrix mat(100., -40., 40.,5.);	
+	Matrix mat(100., -40., 40.,20.);	
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f0_analytical), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f0_num), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f1_analytical), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f1_num), FILENAME);
-	mat.saveToFile(mat.central_scheme(&Matrix::f0_analytical), FILENAME);
+	//mat.saveToFile(mat.central_scheme(&Matrix::f0_analytical), FILENAME);
+	mat.saveToFile(mat.lax_friedrichs(&Matrix::f0_analytical), FILENAME);
 	
 	
 	system("PAUSE");
