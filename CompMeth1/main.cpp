@@ -2,7 +2,7 @@
 #include <ostream>
 #include <cmath>
 #include "Matrix.h"
-#define FILENAME "results.txt"
+#define FILENAME "results.dat"
 
 double tmpfunc(double x)
 {
@@ -11,11 +11,12 @@ double tmpfunc(double x)
 
 int main()
 {
-	Matrix mat;	
+	Matrix mat(100, -40, 40);	
 	mat.saveToFile(mat.upwind_scheme(&Matrix::f0_analytical), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f0_num), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f1_analytical), FILENAME);
 	//mat.saveToFile(mat.upwind_scheme(&Matrix::f1_num), FILENAME);
+	//mat.saveToFile(mat.central_scheme(&Matrix::f0_analytical), FILENAME);
 	
 	
 	system("PAUSE");
