@@ -130,7 +130,7 @@ void Matrix::saveToFile(double* arr, std::string filename)
 	file.open(filename);
 	for (int i = 0; i < 100; i++)
 	{
-		file << arr[i] << std::endl;
+		file << i << " " << arr[i] << std::endl;
 	}
 	file.close();
 }
